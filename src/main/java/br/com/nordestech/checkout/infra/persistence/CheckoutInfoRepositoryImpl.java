@@ -2,7 +2,7 @@ package br.com.nordestech.checkout.infra.persistence;
 
 import br.com.nordestech.checkout.domain.model.CheckoutInfo;
 import br.com.nordestech.checkout.domain.repository.CheckoutInfoRepository;
-import br.com.nordestech.checkout.infra.config.CheckoutInfoMapper;
+import br.com.nordestech.checkout.infra.persistence.mapper.CheckoutInfoMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package br.com.nordestech.checkout.infra.config;
+package br.com.nordestech.checkout.infra.persistence.mapper;
 
 import br.com.nordestech.checkout.domain.model.CheckoutInfo;
 import br.com.nordestech.checkout.infra.persistence.CheckoutInfoDocument;
