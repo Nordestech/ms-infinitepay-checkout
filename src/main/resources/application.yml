@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: ms-infinitepay-checkout
+  profiles:
+    active: dev
+
+---
+# Configuração de Desenvolvimento
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    mongodb:
+      uri: ${MONGODB_ATLAS_URI}
+logging:
+  level:
+    org.springframework.data.mongodb.core.MongoTemplate: DEBUG
