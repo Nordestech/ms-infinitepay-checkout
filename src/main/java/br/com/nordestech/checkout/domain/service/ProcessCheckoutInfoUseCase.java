@@ -15,10 +15,14 @@ public class ProcessCheckoutInfoUseCase {
     public CheckoutInfo process(CheckoutInfo checkoutInfo){
 
         if(!checkoutInfo.getOrderNsu().matches("^order-\\d+$") ||
-        !checkoutInfo.getReceiptUrl().matches("^https://recibo\\.infinitepay\\.io/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") ||
-        !checkoutInfo.getTransactionNsu().matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") ||
-        !checkoutInfo.getTransactionId().matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$") ||
+        !checkoutInfo.getReceiptUrl().matches("^https://recibo\\.infinitepay\\.io/[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$") ||
+        !checkoutInfo.getTransactionNsu().matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$") ||
+        !checkoutInfo.getTransactionId().matches("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-4[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$") ||
         !checkoutInfo.getSlug().matches("^[a-zA-Z0-9]{10}$")) {
+            throw new CheckoutException("Erro no salvamento do checkout");
+        }
+
+        if(!(checkoutInfo.getTransactionNsu().equals(checkoutInfo.getTransactionId()))) {
             throw new CheckoutException("Erro no salvamento do checkout");
         }
 
