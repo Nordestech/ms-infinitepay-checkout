@@ -6,4 +6,8 @@ public interface CheckoutInfoRepository {
 
     CheckoutInfo save(CheckoutInfo checkoutInfo);
 
+    CheckoutInfo getCheckoutInfo(String checkoutInfoId);
+
+    CheckoutInfo getCheckoutInfoByTransactionNsu(String transactionNsu);
+
 }

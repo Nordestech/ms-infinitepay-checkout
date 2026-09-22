@@ -13,7 +13,9 @@ public class CheckoutInfoDTOMapper {
             String orderNsu,
             String slug,
             String captureMethod,
-            String transactionNsu){
+            String transactionNsu,
+            String transactionId
+    ){
 
         return CheckoutInfo.builder()
                 .receiptUrl(receiptUrl)
@@ -21,6 +23,7 @@ public class CheckoutInfoDTOMapper {
                 .slug(slug)
                 .captureMethod(captureMethod)
                 .transactionNsu(transactionNsu)
+                .transactionId(transactionId)
                 .build();
 
     }

@@ -15,8 +15,4 @@ public class Address {
     private String number;
     private String complement;
 
-    public Address toModel() {
-        return new Address(this.cep, this.street, this.neighborhood, this.number, this.complement);
-    }
-
 }

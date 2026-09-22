@@ -1,13 +1,13 @@
 package br.com.nordestech.checkout.domain.service;
 
 import br.com.nordestech.checkout.domain.model.Payload;
-import br.com.nordestech.checkout.domain.model.dto.CheckoutDTO;
 import br.com.nordestech.checkout.port.output.exception.CheckoutException;
 import br.com.nordestech.checkout.port.output.model.Checkout;
 import br.com.nordestech.checkout.port.output.service.CheckoutService;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,14 +17,20 @@ public class CreatePayloadUseCase {
 
     private final CheckoutService checkoutService;
 
-    public CheckoutDTO createPayload(Payload payload) {
+    @Value("${HANDLE}")
+    String handle;
+
+    public Checkout createPayload(Payload payload) {
         try {
-            Checkout checkout = checkoutService.executeCheckout(payload);
-            return CheckoutDTO.builder()
-                    .checkoutUrl(checkout.checkoutUrl())
-                    .build();
+
+            payload.setHandle(handle);
+
+            return checkoutService.executeCheckout(payload);
+
         } catch (FeignException e) {
+
             throw new CheckoutException("Error creating checkout URL");
+
         }
     }
 

@@ -27,4 +27,7 @@ public class CheckoutInfo {
     @JsonProperty("transaction_nsu")
     private String transactionNsu;
 
+    @JsonProperty("transaction_id")
+    private String transactionId;
+
 }

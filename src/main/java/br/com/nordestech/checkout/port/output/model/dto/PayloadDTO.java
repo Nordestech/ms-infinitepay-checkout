@@ -4,30 +4,27 @@ import br.com.nordestech.checkout.domain.model.Address;
 import br.com.nordestech.checkout.domain.model.Customer;
 import br.com.nordestech.checkout.domain.model.Item;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.*;
+import lombok.Builder;
 
 import java.util.List;
 
-@Getter
-@Setter
-@AllArgsConstructor
-@EqualsAndHashCode
 @Builder
-@ToString
-public class PayloadDTO {
+public record PayloadDTO(
 
-        private String handle;
+        String handle,
 
-        private List<Item> items;
+        List<Item> items,
 
         @JsonProperty("order_nsu")
-        private String orderNsu;
+        String orderNsu,
 
         @JsonProperty("redirect_url")
-        private String redirectUrl;
+        String redirectUrl,
 
-        private Customer customer;
+        Customer customer,
 
-        private Address address;
+        Address address
+
+) {
 
 }

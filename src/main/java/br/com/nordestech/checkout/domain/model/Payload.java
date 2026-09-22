@@ -1,5 +1,6 @@
 package br.com.nordestech.checkout.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
@@ -11,22 +12,16 @@ import java.util.List;
 @Builder
 public class Payload {
 
-    private String payloadId;
     private String handle;
     private List<Item> items;
+
+    @JsonProperty("order_nsu")
     private String orderNsu;
+
+    @JsonProperty("redirect_url")
     private String redirectUrl;
+
     private Customer customer;
     private Address address;
 
-    public Payload(String handle, List<Item> items, String orderNsu, String redirectUrl, Customer customer) {
-        this.handle = handle;
-        this.items = items;
-        this.orderNsu = orderNsu;
-        this.redirectUrl = redirectUrl;
-        this.customer = customer;
-    }
-
-    protected  Payload() {
-    }
 }

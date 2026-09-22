@@ -16,7 +16,4 @@ public class Customer {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
-    public Customer toModel() {
-        return new Customer(this.name, this.email, this.phoneNumber);
-    }
 }

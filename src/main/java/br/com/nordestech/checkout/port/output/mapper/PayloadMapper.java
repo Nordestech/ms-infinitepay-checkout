@@ -5,7 +5,7 @@ import br.com.nordestech.checkout.port.output.model.dto.PayloadDTO;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PayloadToCheckoutDTOMapper {
+public class PayloadMapper {
 
     public PayloadDTO toPayloadDTO(Payload payload) {
 

@@ -15,8 +15,4 @@ public class Item {
     private BigDecimal price;
     private String description;
 
-    public Item toModel() {
-        return new Item(this.quantity, this.price, this.description);
-    }
-
 }
