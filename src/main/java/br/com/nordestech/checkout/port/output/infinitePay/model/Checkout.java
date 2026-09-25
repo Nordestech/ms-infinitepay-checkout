@@ -1,4 +1,4 @@
-package br.com.nordestech.checkout.port.output.model;
+package br.com.nordestech.checkout.port.output.infinitePay.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -3,7 +3,7 @@ package br.com.nordestech.checkout.application;
 import br.com.nordestech.checkout.domain.exception.CheckoutNotFoundException;
 import br.com.nordestech.checkout.domain.exception.PayloadBadRequestException;
 import br.com.nordestech.checkout.domain.exception.PaymentNotFoundException;
-import br.com.nordestech.checkout.port.output.exception.CheckoutException;
+import br.com.nordestech.checkout.port.output.infinitePay.exception.CheckoutException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

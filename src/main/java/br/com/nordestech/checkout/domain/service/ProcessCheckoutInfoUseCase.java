@@ -2,7 +2,7 @@ package br.com.nordestech.checkout.domain.service;
 
 import br.com.nordestech.checkout.domain.model.CheckoutInfo;
 import br.com.nordestech.checkout.domain.repository.CheckoutInfoRepository;
-import br.com.nordestech.checkout.port.output.exception.CheckoutException;
+import br.com.nordestech.checkout.port.output.infinitePay.exception.CheckoutException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

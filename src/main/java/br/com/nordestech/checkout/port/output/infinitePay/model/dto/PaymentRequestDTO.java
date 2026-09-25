@@ -1,4 +1,4 @@
-package br.com.nordestech.checkout.port.output.model.dto;
+package br.com.nordestech.checkout.port.output.infinitePay.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;

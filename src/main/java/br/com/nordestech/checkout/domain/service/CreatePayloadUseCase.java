@@ -1,9 +1,9 @@
 package br.com.nordestech.checkout.domain.service;
 
 import br.com.nordestech.checkout.domain.model.Payload;
-import br.com.nordestech.checkout.port.output.exception.CheckoutException;
-import br.com.nordestech.checkout.port.output.model.Checkout;
-import br.com.nordestech.checkout.port.output.service.CheckoutService;
+import br.com.nordestech.checkout.port.output.infinitePay.exception.CheckoutException;
+import br.com.nordestech.checkout.port.output.infinitePay.model.Checkout;
+import br.com.nordestech.checkout.port.output.infinitePay.service.CheckoutService;
 import feign.FeignException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

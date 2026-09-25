@@ -1,7 +1,7 @@
-package br.com.nordestech.checkout.port.output.mapper;
+package br.com.nordestech.checkout.port.output.infinitePay.mapper;
 
 import br.com.nordestech.checkout.domain.model.PaymentInfo;
-import br.com.nordestech.checkout.port.output.model.Payment;
+import br.com.nordestech.checkout.port.output.infinitePay.model.Payment;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,12 +1,12 @@
-package br.com.nordestech.checkout.port.output.service;
+package br.com.nordestech.checkout.port.output.infinitePay.service;
 
 import br.com.nordestech.checkout.domain.exception.PaymentNotFoundException;
 import br.com.nordestech.checkout.domain.model.CheckoutInfo;
 import br.com.nordestech.checkout.domain.model.PaymentInfo;
-import br.com.nordestech.checkout.port.output.api.PaymentInfoAPI;
-import br.com.nordestech.checkout.port.output.mapper.PaymentMapper;
-import br.com.nordestech.checkout.port.output.model.Payment;
-import br.com.nordestech.checkout.port.output.model.dto.PaymentRequestDTO;
+import br.com.nordestech.checkout.port.output.infinitePay.api.PaymentInfoAPI;
+import br.com.nordestech.checkout.port.output.infinitePay.mapper.PaymentMapper;
+import br.com.nordestech.checkout.port.output.infinitePay.model.Payment;
+import br.com.nordestech.checkout.port.output.infinitePay.model.dto.PaymentRequestDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

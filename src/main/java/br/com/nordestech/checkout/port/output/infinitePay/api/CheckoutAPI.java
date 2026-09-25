@@ -1,7 +1,7 @@
-package br.com.nordestech.checkout.port.output.api;
+package br.com.nordestech.checkout.port.output.infinitePay.api;
 
-import br.com.nordestech.checkout.port.output.model.Checkout;
-import br.com.nordestech.checkout.port.output.model.dto.PayloadDTO;
+import br.com.nordestech.checkout.port.output.infinitePay.model.Checkout;
+import br.com.nordestech.checkout.port.output.infinitePay.model.dto.PayloadDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

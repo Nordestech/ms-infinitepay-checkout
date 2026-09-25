@@ -3,7 +3,7 @@ package br.com.nordestech.checkout.domain.service;
 import br.com.nordestech.checkout.domain.model.CheckoutInfo;
 import br.com.nordestech.checkout.domain.model.PaymentInfo;
 import br.com.nordestech.checkout.domain.repository.CheckoutInfoRepository;
-import br.com.nordestech.checkout.port.output.service.PaymentService;
+import br.com.nordestech.checkout.port.output.infinitePay.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

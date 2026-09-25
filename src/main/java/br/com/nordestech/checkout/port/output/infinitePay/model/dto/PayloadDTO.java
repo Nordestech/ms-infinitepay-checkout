@@ -1,4 +1,4 @@
-package br.com.nordestech.checkout.port.output.model.dto;
+package br.com.nordestech.checkout.port.output.infinitePay.model.dto;
 
 import br.com.nordestech.checkout.domain.model.Address;
 import br.com.nordestech.checkout.domain.model.Customer;
