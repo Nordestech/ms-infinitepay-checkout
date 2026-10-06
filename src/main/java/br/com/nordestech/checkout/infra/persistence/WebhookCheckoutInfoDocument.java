@@ -3,6 +3,7 @@ package br.com.nordestech.checkout.infra.persistence;
 import br.com.nordestech.checkout.domain.model.Item;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
@@ -35,9 +36,11 @@ public class WebhookCheckoutInfoDocument {
     private String captureMethod;
 
     @Field("transaction_nsu")
+    @Indexed(unique = true)
     private String transactionNsu;
 
     @Field("order_nsu")
+    @Indexed(unique = true)
     private String orderNsu;
 
     @Field("receipt_url")
