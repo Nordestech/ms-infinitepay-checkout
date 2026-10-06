@@ -1,6 +1,5 @@
 package br.com.nordestech.checkout.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import java.util.List;
@@ -14,16 +13,9 @@ public class Payload {
 
     private String handle;
     private List<Item> items;
-
-    @JsonProperty("order_nsu")
     private String orderNsu;
-
-    @JsonProperty("redirect_url")
     private String redirectUrl;
-
-    @JsonProperty("webhook_url")
     private String webhookUrl;
-
     private Customer customer;
     private Address address;
 

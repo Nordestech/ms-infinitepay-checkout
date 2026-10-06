@@ -9,29 +9,29 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String CHECKOUT_EXCHANGE = "checkout.v1.events";
-    public static final String QUEUE_CHECKOUT_CREATED = "checkout.created.queue";
-    public static final String ROUTING_KEY_CHECKOUT_CREATED = "checkout.created";
+    public static final String PAYMENT_APPROVED_EXCHANGE = "payment.v1.events";
+    public static final String QUEUE_PAYMENT_APPROVED = "payment.approved.queue";
+    public static final String ROUTING_KEY_PAYMENT_APPROVED = "payment.approved";
 
     // 1. Fila que armazenará as mensagens
     @Bean
-    public Queue checkoutCreatedQueue() {
-        return QueueBuilder.durable(QUEUE_CHECKOUT_CREATED)
+    public Queue paymentApprovedQueue() {
+        return QueueBuilder.durable(QUEUE_PAYMENT_APPROVED)
                 .build();
     }
 
     // 2. Exchange do tipo Direct
     @Bean
-    public DirectExchange checkoutExchange() {
-        return new DirectExchange(CHECKOUT_EXCHANGE);
+    public DirectExchange paymentApprovedExchange() {
+        return new DirectExchange(PAYMENT_APPROVED_EXCHANGE);
     }
 
     // 3. Vinculo (Binding) entre a Fila e a Exchange através de uma Routing Key
     @Bean
-    public Binding checkoutCreatedBinding(Queue checkoutCreatedQueue, DirectExchange checkoutExchange) {
-        return BindingBuilder.bind(checkoutCreatedQueue)
-                .to(checkoutExchange)
-                .with(ROUTING_KEY_CHECKOUT_CREATED);
+    public Binding paymentApprovedBinding(Queue paymentApprovedQueue, DirectExchange paymentApprovedExchange) {
+        return BindingBuilder.bind(paymentApprovedQueue)
+                .to(paymentApprovedExchange)
+                .with(ROUTING_KEY_PAYMENT_APPROVED);
     }
 
     // 4. Conversor para enviar/receber objetos em formato JSON (Jackson)

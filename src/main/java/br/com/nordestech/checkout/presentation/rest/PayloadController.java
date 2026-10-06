@@ -65,7 +65,7 @@ public class PayloadController {
             @ApiResponse(responseCode = "400", description = "Dados de requisição inválidos")
     })
     @PostMapping("/webhook")
-    public ResponseEntity<Void> receiveCheckoutWebhook(@RequestBody WebhookCheckoutInfoRequestDTO checkoutInfoWebhook) {
+    public ResponseEntity<Void> receiveCheckoutWebhook(@RequestBody @Valid WebhookCheckoutInfoRequestDTO checkoutInfoWebhook) {
 
         log.info("Webhook request received: 'order_nsu' = '{}'", checkoutInfoWebhook.orderNsu());
         processWebhookCheckoutInfoUseCase.save(webhookCheckoutInfoDTOMapper.toWebhookCheckoutInfo(checkoutInfoWebhook));

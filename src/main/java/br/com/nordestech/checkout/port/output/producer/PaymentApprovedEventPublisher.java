@@ -20,11 +20,11 @@ public class PaymentApprovedEventPublisher {
         PaymentApprovedDTO paymentApprovedDTO = toPaymentApprovedDTO(webhookCheckoutInfo);
 
         rabbitTemplate.convertAndSend(
-                RabbitMQConfig.CHECKOUT_EXCHANGE,
-                RabbitMQConfig.ROUTING_KEY_CHECKOUT_CREATED,
+                RabbitMQConfig.PAYMENT_APPROVED_EXCHANGE,
+                RabbitMQConfig.ROUTING_KEY_PAYMENT_APPROVED,
                 paymentApprovedDTO
         );
-        log.info("Payment approved event sent to queue: 'order_nsu' = '{}'", paymentApprovedDTO);
+        log.info("Payment approved event sent to queue: 'order_nsu' = '{}'", paymentApprovedDTO.orderNsu());
     }
 
     private PaymentApprovedDTO toPaymentApprovedDTO(WebhookCheckoutInfo webhookCheckoutInfo) {
