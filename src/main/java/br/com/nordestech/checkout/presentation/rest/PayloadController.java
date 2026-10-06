@@ -10,6 +10,7 @@ import br.com.nordestech.checkout.presentation.mapper.CheckoutDTOMapper;
 import br.com.nordestech.checkout.presentation.mapper.CheckoutInfoDTOMapper;
 import br.com.nordestech.checkout.presentation.mapper.PayloadDTOMapper;
 import br.com.nordestech.checkout.presentation.mapper.PaymentInfoDTOMapper;
+import br.com.nordestech.checkout.presentation.rest.request.CheckoutInfoWebhook;
 import br.com.nordestech.checkout.presentation.rest.request.PayloadRequestDTO;
 import br.com.nordestech.checkout.presentation.rest.response.CheckoutResponseDTO;
 import br.com.nordestech.checkout.presentation.rest.response.PaymentInfoResponseDTO;
@@ -82,6 +83,20 @@ public class PayloadController {
         return ResponseEntity.status(HttpStatus.FOUND)
                 .header(HttpHeaders.LOCATION, targetUrl)
                 .build();
+    }
+
+    @Operation(
+            summary = "Receber webhook do checkout",
+            description = "Recebe a notificação de pagamento aprovado enviada pela InfinitePay"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Webhook recebido com sucesso"),
+            @ApiResponse(responseCode = "400", description = "Dados de requisição inválidos")
+    })
+    @PostMapping("/webhook")
+    public ResponseEntity<Void> receiveCheckoutWebhook(@RequestBody CheckoutInfoWebhook checkoutInfoWebhook) {
+
+        return ResponseEntity.ok().build();
     }
 
     @Operation(summary = "Busca informações de pagamento do checkout",
