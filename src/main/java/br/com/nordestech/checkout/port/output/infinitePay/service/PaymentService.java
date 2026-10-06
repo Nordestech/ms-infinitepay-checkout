@@ -25,7 +25,7 @@ public class PaymentService {
 
             PaymentRequestDTO paymentRequestDTO = buildPaymentRequestDTO(webhookCheckoutInfo, handle);
 
-            log.info("Checking payment info: {}", paymentRequestDTO);
+            log.info("Checking payment info: 'order_nsu' = '{}'", paymentRequestDTO.orderNsu());
             Payment payment = paymentInfoAPI.getPaymentInfo(paymentRequestDTO);
 
             return paymentMapper.toPaymentInfo(payment);

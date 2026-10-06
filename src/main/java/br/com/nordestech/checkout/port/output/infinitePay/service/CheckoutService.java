@@ -21,7 +21,7 @@ public class CheckoutService {
 
         try {
 
-            log.info("Processing checkout request: {}", payload);
+            log.info("Processing checkout request: 'order_nsu' = '{}'", payload.getOrderNsu());
             return checkoutAPI.createCheckoutURL(mapper.toPayloadDTO(payload));
 
         } catch (feign.FeignException e) {

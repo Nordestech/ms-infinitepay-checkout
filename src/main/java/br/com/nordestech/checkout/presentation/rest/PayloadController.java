@@ -48,10 +48,10 @@ public class PayloadController {
     @PostMapping("/create")
     public ResponseEntity<CheckoutResponseDTO> createCheckout(@RequestBody @Valid PayloadRequestDTO payloadRequestDTO) {
 
-        log.info("Creating checkout request received: {}", payloadRequestDTO);
+        log.info("Creating checkout request received: 'order_nsu' = '{}'", payloadRequestDTO.orderNsu());
         Checkout checkout = createPayloadUseCase.createPayload(payloadDTOMapper.toPayload(payloadRequestDTO));
 
-        log.info("Checkout created: {}", checkout);
+        log.info("Checkout created: 'checkout_url' = '{}'", checkout);
         return ResponseEntity.ok(checkoutDTOMapper.toCheckoutResponseDTO(checkout));
 
     }
@@ -67,10 +67,10 @@ public class PayloadController {
     @PostMapping("/webhook")
     public ResponseEntity<Void> receiveCheckoutWebhook(@RequestBody WebhookCheckoutInfoRequestDTO checkoutInfoWebhook) {
 
-        log.info("Webhook request received: {}", checkoutInfoWebhook);
+        log.info("Webhook request received: 'order_nsu' = '{}'", checkoutInfoWebhook.orderNsu());
         processWebhookCheckoutInfoUseCase.save(webhookCheckoutInfoDTOMapper.toWebhookCheckoutInfo(checkoutInfoWebhook));
 
-        log.info("Webhook processed: {}", checkoutInfoWebhook);
+        log.info("Webhook processed: 'order_nsu' = '{}'", checkoutInfoWebhook.orderNsu());
         return ResponseEntity.ok().build();
 
     }
@@ -85,10 +85,10 @@ public class PayloadController {
     @GetMapping("/status/{orderNsu}")
     public ResponseEntity<PaymentInfoResponseDTO> checkPayment(@PathVariable("orderNsu") String orderNsu) {
 
-        log.info("Check payment request received: {}", orderNsu);
+        log.info("Check payment request received: 'order_nsu' = '{}'", orderNsu);
         PaymentInfo paymentInfo = getPaymentInfoUseCase.getPayment(orderNsu);
 
-        log.info("Payment info response: {}", paymentInfo);
+        log.info("Payment info response: 'payment_info' = '{}'", paymentInfo);
         return ResponseEntity.ok().body(paymentInfoDTOMapper.toPaymentInfoResponseDTO(paymentInfo));
 
     }
