@@ -19,7 +19,7 @@ public class ProcessWebhookCheckoutInfoUseCase {
 
     @Transactional
     public void save(WebhookCheckoutInfo webhookCheckoutInfo) {
-        if (!repository.existsByOrderNsu(webhookCheckoutInfo.getTransactionNsu())) {
+        if (!repository.existsByOrderNsu(webhookCheckoutInfo.getOrderNsu())) {
             repository.save(webhookCheckoutInfo);
 
             eventPublisher.publishCheckoutCreatedEvent(webhookCheckoutInfo);
