@@ -17,9 +17,9 @@ public class GetPaymentInfoUseCase {
     @Value("${HANDLE}")
     String handle;
 
-    public PaymentInfo getPayment(String checkoutInfoId) {
+    public PaymentInfo getPayment(String orderNsu) {
 
-        WebhookCheckoutInfo webhookCheckoutInfo = getWebhookCheckoutInfoUseCase.findByOrderNsu(checkoutInfoId);
+        WebhookCheckoutInfo webhookCheckoutInfo = getWebhookCheckoutInfoUseCase.findByOrderNsu(orderNsu);
 
         return paymentService.checkPayment(webhookCheckoutInfo, handle);
     }

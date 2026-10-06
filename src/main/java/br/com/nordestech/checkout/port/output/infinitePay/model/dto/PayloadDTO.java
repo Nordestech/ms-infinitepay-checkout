@@ -21,6 +21,9 @@ public record PayloadDTO(
         @JsonProperty("redirect_url")
         String redirectUrl,
 
+        @JsonProperty("webhook_url")
+        String webhookUrl,
+
         Customer customer,
 
         Address address

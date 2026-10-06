@@ -14,6 +14,7 @@ public class PayloadMapper {
                 .items(payload.getItems())
                 .orderNsu(payload.getOrderNsu())
                 .redirectUrl(payload.getRedirectUrl())
+                .webhookUrl(payload.getWebhookUrl())
                 .customer(payload.getCustomer())
                 .address(payload.getAddress())
                 .build();

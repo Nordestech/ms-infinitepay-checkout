@@ -20,6 +20,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +56,32 @@ public class PayloadController {
         log.info("Checkout created: 'checkout_url' = '{}'", checkout);
         return ResponseEntity.ok(checkoutDTOMapper.toCheckoutResponseDTO(checkout));
 
+    }
+
+    @Operation(
+            summary = "Redireciona o checkout para status",
+            description = "Redireciona a página para o endpoint de status de um pedido de checkout por meio de parâmetros na URL gerado pelo api do InfinitePay"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "302", description = "Informações de checkout retornadas com sucesso "),
+            @ApiResponse(responseCode = "400", description = "Dados de requisição inválidos")
+    })
+    @GetMapping("/redirect")
+    public ResponseEntity<Void> returnCheckout(
+            @RequestParam(name = "receipt_url") String receiptUrl,
+            @RequestParam(name = "order_nsu") String orderNsu,
+            @RequestParam(name = "slug") String slug,
+            @RequestParam(name = "capture_method") String captureMethod,
+            @RequestParam(name = "transaction_nsu") String transactionNsu,
+            @RequestParam(name = "transaction_id") String transactionId) {
+
+        log.info("Redirect request received: 'order_nsu' = '{}'", orderNsu);
+        String targetUrl = "https://untie-lend-shush.ngrok-free.dev/api/checkout/status/" + orderNsu;
+
+        log.info("Redirecting to endpoint POST /api/checkout/status/{orderNsu}: 'url' = '{}'", targetUrl);
+        return ResponseEntity.status(HttpStatus.FOUND)
+                .header(HttpHeaders.LOCATION, targetUrl)
+                .build();
     }
 
     @Operation(

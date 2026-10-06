@@ -23,6 +23,7 @@ public class CreatePayloadUseCase {
     public Checkout createPayload(Payload payload) {
         try {
 
+            log.info("Setting handle to payload: 'handle' = '{}'", handle);
             payload.setHandle(handle);
 
             return checkoutService.executeCheckout(payload);

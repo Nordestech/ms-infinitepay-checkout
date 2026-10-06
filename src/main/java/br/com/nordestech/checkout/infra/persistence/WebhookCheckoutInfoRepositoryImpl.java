@@ -23,7 +23,7 @@ public class WebhookCheckoutInfoRepositoryImpl implements WebhookCheckoutInfoRep
 
     @Override
     public WebhookCheckoutInfo findByOrderNsu(String orderNsu) {
-        Optional<WebhookCheckoutInfoDocument> checkoutInfoDocument = repository.findByOrderNsu(orderNsu);
+        Optional<WebhookCheckoutInfoDocument> checkoutInfoDocument = repository.findWebhookCheckoutInfoDocumentByOrderNsu(orderNsu);
 
         if (checkoutInfoDocument.isEmpty()) {
             throw new ResourceNotFoundException("Checkout Info", "orderNsu", orderNsu);

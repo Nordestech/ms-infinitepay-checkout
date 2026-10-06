@@ -6,7 +6,8 @@ import java.util.Optional;
 
 public interface SpringDataMongoWebhookCheckoutInfoRepository extends MongoRepository<WebhookCheckoutInfoDocument, String> {
 
-    Optional<WebhookCheckoutInfoDocument> findByOrderNsu(String orderNsu);
-
     Boolean existsByOrderNsu(String orderNsu);
+
+    Optional<WebhookCheckoutInfoDocument> findWebhookCheckoutInfoDocumentByOrderNsu(String orderNsu);
+
 }

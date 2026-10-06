@@ -18,9 +18,13 @@ public class ProcessWebhookCheckoutInfoUseCase {
 
     public void save(WebhookCheckoutInfo webhookCheckoutInfo) {
         if (!repository.existsByOrderNsu(webhookCheckoutInfo.getOrderNsu())) {
+
+            log.info("Saving webhook checkout info: 'order_nsu' = '{}'", webhookCheckoutInfo.getOrderNsu());
             repository.save(webhookCheckoutInfo);
 
+            log.info("Publish payment approved request received: 'order_nsu' = '{}'", webhookCheckoutInfo.getOrderNsu());
             eventPublisher.publishPaymentApprovedEvent(webhookCheckoutInfo);
+
         }
     }
 
