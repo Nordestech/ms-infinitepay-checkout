@@ -1,0 +1,45 @@
+package br.com.nordestech.checkout.domain.service;
+
+import br.com.nordestech.checkout.domain.model.WebhookCheckoutInfo;
+import br.com.nordestech.checkout.domain.repository.WebhookCheckoutInfoRepository;
+import br.com.nordestech.checkout.port.output.producer.PaymentApprovedEventPublisher;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import static org.mockito.Mockito.*;
+
+class ProcessWebhookCheckoutInfoUseCaseTest {
+
+    private WebhookCheckoutInfoRepository repository;
+    private PaymentApprovedEventPublisher eventPublisher;
+    private ProcessWebhookCheckoutInfoUseCase useCase;
+
+    @BeforeEach
+    void setUp() {
+        repository = mock(WebhookCheckoutInfoRepository.class);
+        eventPublisher = mock(PaymentApprovedEventPublisher.class);
+        useCase = new ProcessWebhookCheckoutInfoUseCase(repository, eventPublisher);
+    }
+
+    @Test
+    void shouldPersistAndPublishWhenOrderHasNotBeenProcessed() {
+        WebhookCheckoutInfo webhook = WebhookCheckoutInfo.builder().orderNsu("pedido-123").build();
+        when(repository.existsByOrderNsu("pedido-123")).thenReturn(false);
+
+        useCase.save(webhook);
+
+        verify(repository).save(webhook);
+        verify(eventPublisher).publishPaymentApprovedEvent(webhook);
+    }
+
+    @Test
+    void shouldIgnoreDuplicateOrderWithoutPersistingOrPublishing() {
+        WebhookCheckoutInfo webhook = WebhookCheckoutInfo.builder().orderNsu("pedido-123").build();
+        when(repository.existsByOrderNsu("pedido-123")).thenReturn(true);
+
+        useCase.save(webhook);
+
+        verify(repository, never()).save(any());
+        verifyNoInteractions(eventPublisher);
+    }
+}
