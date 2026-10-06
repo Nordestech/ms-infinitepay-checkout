@@ -29,7 +29,7 @@ public class CreatePayloadUseCase {
 
         } catch (FeignException e) {
 
-            throw new CheckoutException("Error creating checkout URL");
+            throw new CheckoutException("Checkout", "message", e.getMessage());
 
         }
     }

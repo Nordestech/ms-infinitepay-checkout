@@ -1,11 +1,17 @@
-package br.com.nordestech.checkout.presentation.rest.request;
+package br.com.nordestech.checkout.presentation.rest.response;
 
+import br.com.nordestech.checkout.domain.model.Item;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
-public record CheckoutInfoWebhook(
+@Builder
+public record WebhookCheckoutInfoResponseDTO(
+
+        String checkoutId,
 
         @JsonProperty("invoice_slug")
         String invoiceSlug,
@@ -29,18 +35,10 @@ public record CheckoutInfoWebhook(
         @JsonProperty("receipt_url")
         String receiptUrl,
 
-        List<Item> items
+        List<Item> items,
+
+        @JsonProperty("created_at")
+        LocalDateTime createdAt
 
 ) {
-
-    public record Item(
-
-            Integer quantity,
-
-            BigDecimal price,
-
-            String description
-
-    ) {
-    }
 }

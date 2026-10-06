@@ -21,6 +21,9 @@ public class Payload {
     @JsonProperty("redirect_url")
     private String redirectUrl;
 
+    @JsonProperty("webhook_url")
+    private String webhookUrl;
+
     private Customer customer;
     private Address address;
 

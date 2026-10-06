@@ -1,83 +1,83 @@
 package br.com.nordestech.checkout.application;
 
-import br.com.nordestech.checkout.domain.exception.CheckoutNotFoundException;
-import br.com.nordestech.checkout.domain.exception.PayloadBadRequestException;
-import br.com.nordestech.checkout.domain.exception.PaymentNotFoundException;
+import br.com.nordestech.checkout.domain.exception.ResourceBadRequestException;
+import br.com.nordestech.checkout.domain.exception.ResourceNotFoundException;
 import br.com.nordestech.checkout.port.output.infinitePay.exception.CheckoutException;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import java.time.Instant;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 @ControllerAdvice
 public class GlobalHandlerException {
 
 
-    //------------------------------- PAYLOAD EXCEPTIONS -------------------------------------------------
+    /**
+     * Exceptions de tratamento para o {@code ms-usuario}
+     */
 
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<ProblemDetail> handleResourceNotFound(ResourceNotFoundException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage()
+        );
 
-    @ExceptionHandler(PayloadBadRequestException.class)
-    public ResponseEntity<StandardErrorMessage> handlePayloadBadRequestException(PayloadBadRequestException ex, HttpServletRequest request) {
-        String error = "Erro na requisição";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardErrorMessage message = new StandardErrorMessage(Instant.now(), status.value(),
-                error, ex.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(message);
+        problemDetail.setTitle("Recurso Não Encontrado");
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(problemDetail);
     }
 
+    @ExceptionHandler(ResourceBadRequestException.class)
+    public ResponseEntity<ProblemDetail> handleResourceBadRequest(ResourceBadRequestException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage()
+        );
 
-    //------------------------------- CHECKOUT EXCEPTIONS -------------------------------------------------
+        problemDetail.setTitle("Recurso com dados inválidos");
 
-
-    @ExceptionHandler(CheckoutNotFoundException.class)
-    public ResponseEntity<StandardErrorMessage> handleCheckoutNotFoundException(CheckoutNotFoundException ex, HttpServletRequest request) {
-        String error = "Erro na requisição";
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardErrorMessage message = new StandardErrorMessage(Instant.now(), status.value(),
-                error, ex.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(message);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
     @ExceptionHandler(CheckoutException.class)
-    public ResponseEntity<StandardErrorMessage> handleCheckoutException(CheckoutException ex, HttpServletRequest request) {
-        String error = "Erro na requisição";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardErrorMessage message = new StandardErrorMessage(Instant.now(), status.value(),
-                error, ex.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(message);
+    public ResponseEntity<ProblemDetail> handleCheckoutException(CheckoutException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                ex.getMessage()
+        );
+
+        problemDetail.setTitle("Erro no checkout");
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
-
-    //------------------------------- PAYLOAD EXCEPTIONS -------------------------------------------------
-
-
-    @ExceptionHandler(PaymentNotFoundException.class)
-    public ResponseEntity<StandardErrorMessage> handlePaymentNotFoundException(PaymentNotFoundException ex, HttpServletRequest request) {
-        String error = "Erro na requisição";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardErrorMessage message = new StandardErrorMessage(Instant.now(), status.value(),
-                error, ex.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(message);
-    }
-
-
-    //------------------------------- METHOD EXCEPTIONS -------------------------------------------------
-
+    /**
+     * Exceptions de tratamento para o {@code @Valid}
+     */
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardErrorMessage> handleMethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-        String errors = e.getBindingResult().getFieldErrors().stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .collect(Collectors.joining(", "));
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardErrorMessage message = new StandardErrorMessage(Instant.now(), status.value(),
-                "Bad request error", errors, request.getRequestURI());
-        return ResponseEntity.status(status).body(message);
+    public ResponseEntity<ProblemDetail> handleValidationErrors(MethodArgumentNotValidException ex) {
+        ProblemDetail problemDetail = ProblemDetail.forStatusAndDetail(
+                HttpStatus.BAD_REQUEST,
+                "Dados inválidos"
+        );
+
+        problemDetail.setTitle("Erro de Validação");
+
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+        );
+
+        problemDetail.setProperty("fields", errors);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(problemDetail);
     }
 
 }

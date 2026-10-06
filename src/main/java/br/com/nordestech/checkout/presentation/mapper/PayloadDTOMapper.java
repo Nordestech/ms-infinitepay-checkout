@@ -13,6 +13,7 @@ public class PayloadDTOMapper {
                 .items(dto.items().stream().map(PayloadRequestDTO.ItemDTO::toModel).toList())
                 .orderNsu(dto.orderNsu())
                 .redirectUrl(dto.redirectUrl())
+                .webhookUrl(dto.webhookUrl())
                 .customer(dto.customer().toModel())
                 .address(dto.address().toModel())
                 .build();

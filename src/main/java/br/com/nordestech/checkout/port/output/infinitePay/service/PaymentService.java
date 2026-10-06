@@ -1,45 +1,48 @@
 package br.com.nordestech.checkout.port.output.infinitePay.service;
 
-import br.com.nordestech.checkout.domain.exception.PaymentNotFoundException;
-import br.com.nordestech.checkout.domain.model.CheckoutInfo;
+import br.com.nordestech.checkout.domain.exception.ResourceNotFoundException;
 import br.com.nordestech.checkout.domain.model.PaymentInfo;
+import br.com.nordestech.checkout.domain.model.WebhookCheckoutInfo;
 import br.com.nordestech.checkout.port.output.infinitePay.api.PaymentInfoAPI;
 import br.com.nordestech.checkout.port.output.infinitePay.mapper.PaymentMapper;
 import br.com.nordestech.checkout.port.output.infinitePay.model.Payment;
 import br.com.nordestech.checkout.port.output.infinitePay.model.dto.PaymentRequestDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentService {
 
     private final PaymentInfoAPI paymentInfoAPI;
     private final PaymentMapper paymentMapper;
 
-    public PaymentInfo checkPayment(CheckoutInfo checkoutInfo, String handle) {
+    public PaymentInfo checkPayment(WebhookCheckoutInfo webhookCheckoutInfo, String handle) {
 
         try {
 
-            PaymentRequestDTO paymentRequestDTO = buildPaymentRequestDTO(checkoutInfo, handle);
+            PaymentRequestDTO paymentRequestDTO = buildPaymentRequestDTO(webhookCheckoutInfo, handle);
 
+            log.info("Checking payment info: {}", paymentRequestDTO);
             Payment payment = paymentInfoAPI.getPaymentInfo(paymentRequestDTO);
 
             return paymentMapper.toPaymentInfo(payment);
 
         } catch (feign.FeignException e) {
-            throw new PaymentNotFoundException("Payment not found: " + e.getMessage());
+            throw new ResourceNotFoundException("Payment", "Checkout Info", webhookCheckoutInfo);
         }
 
     }
 
-    private PaymentRequestDTO buildPaymentRequestDTO(CheckoutInfo checkoutInfo, String handle) {
+    private PaymentRequestDTO buildPaymentRequestDTO(WebhookCheckoutInfo webhookCheckoutInfo, String handle) {
 
         return PaymentRequestDTO.builder()
                 .handle(handle)
-                .orderNsu(checkoutInfo.getOrderNsu())
-                .transactionNsu(checkoutInfo.getTransactionNsu())
-                .slug(checkoutInfo.getSlug())
+                .orderNsu(webhookCheckoutInfo.getOrderNsu())
+                .transactionNsu(webhookCheckoutInfo.getTransactionNsu())
+                .slug(webhookCheckoutInfo.getInvoiceSlug())
                 .build();
 
     }

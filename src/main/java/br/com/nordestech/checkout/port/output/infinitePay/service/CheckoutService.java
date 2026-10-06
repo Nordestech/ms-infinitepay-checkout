@@ -6,10 +6,12 @@ import br.com.nordestech.checkout.port.output.infinitePay.exception.CheckoutExce
 import br.com.nordestech.checkout.port.output.infinitePay.mapper.PayloadMapper;
 import br.com.nordestech.checkout.port.output.infinitePay.model.Checkout;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class CheckoutService {
 
     private final CheckoutAPI checkoutAPI;
@@ -19,11 +21,12 @@ public class CheckoutService {
 
         try {
 
+            log.info("Processing checkout request: {}", payload);
             return checkoutAPI.createCheckoutURL(mapper.toPayloadDTO(payload));
 
         } catch (feign.FeignException e) {
 
-            throw new CheckoutException("Error at checkout: " + e.getMessage());
+            throw new CheckoutException("Checkout", "message", e.getMessage());
 
         }
     }

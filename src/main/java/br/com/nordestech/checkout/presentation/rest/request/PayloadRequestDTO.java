@@ -25,6 +25,10 @@ public record PayloadRequestDTO(
         @JsonProperty("redirect_url")
         String redirectUrl,
 
+        @NotBlank(message = "webhook_url é obrigatório")
+        @JsonProperty("webhook_url")
+        String webhookUrl,
+
         @NotNull(message = "customer é obrigatório")
         @JsonProperty("customer")
         @Valid
