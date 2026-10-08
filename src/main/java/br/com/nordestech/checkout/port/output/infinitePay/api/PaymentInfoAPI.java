@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(
         name = "PaymentInfoAPI",
-        url = "https://api.infinitepay.io"
+        url = "https://api.checkout.infinitepay.io"
 )
 public interface PaymentInfoAPI {
 
-    @PostMapping("/invoices/public/checkout/payment_check")
+    @PostMapping("/payment_check")
     Payment getPaymentInfo(@RequestBody PaymentRequestDTO paymentRequestDTO);
 
 }
