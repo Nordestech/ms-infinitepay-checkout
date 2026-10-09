@@ -3,6 +3,7 @@ package br.com.nordestech.checkout.infra.config;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -28,7 +29,7 @@ public class RabbitMQConfig {
 
     // 3. Vinculo (Binding) entre a Fila e a Exchange através de uma Routing Key
     @Bean
-    public Binding paymentApprovedBinding(Queue paymentApprovedQueue, DirectExchange paymentApprovedExchange) {
+    public Binding paymentApprovedBinding(@Qualifier("paymentApprovedQueue") Queue paymentApprovedQueue, DirectExchange paymentApprovedExchange) {
         return BindingBuilder.bind(paymentApprovedQueue)
                 .to(paymentApprovedExchange)
                 .with(ROUTING_KEY_PAYMENT_APPROVED);
